@@ -12,3 +12,4 @@
 */
 
 Route::resource('mangas', 'MangaController', ['only' => ['index', 'show']]);
+Route::resource('categories', 'CategoryController', ['only' => ['index']]);
