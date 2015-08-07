@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
 
 class Manga extends Model
@@ -13,13 +12,19 @@ class Manga extends Model
     
     public $timestamps = false;
 
-    public static $briefAttributes = [
+    public static $briefAttrToSelect = [
         'id',
         'nme',
         'slg',
     ];
 
-    public static $detailAttributes = [
+    public static $briefAttrToOutput = [
+        'id',
+        'nme',
+        'tbn'
+    ];
+
+    public static $detailAttrToSelect = [
         'id',
         'nme',
         'slg',
@@ -28,6 +33,14 @@ class Manga extends Model
         'rnk',
         'mng_chp_cnt',
         'dte_upd',
+    ];
+
+    public static $detailAttrToOutput = [
+        'cat',
+        'dsc',
+        'rnk',
+        'chps',
+        'updts',
     ];
 
     protected $hidden = [
@@ -66,7 +79,7 @@ class Manga extends Model
     public function getChpsAttribute()
     {
         return $this->mng_chp_cnt;
-    }    
+    }
 
     public function getUpdtsAttribute()
     {

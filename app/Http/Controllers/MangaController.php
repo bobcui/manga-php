@@ -23,14 +23,15 @@ class MangaController extends Controller
         $offset = $request->query('offset', 0);
         $limit = min($request->query('limit', static::MAX_COUNT_PER_REQUEST), static::MAX_COUNT_PER_REQUEST);
 
-        $mangas = Manga::select(Manga::$briefAttributes)
+        $mangas = Manga::select(Manga::$briefAttrToSelect)
             ->skip($offset)
             ->take($limit)
             ->get();
 
-        return response()->json($mangas->toArray());
+        return response()->json($mangas->map(function($manga){
+            return $manga->toArray(Manga::$briefAttrToOutput);
+        }));
     }
-
 
     /**
      * Display the specified resource.
@@ -40,8 +41,8 @@ class MangaController extends Controller
      */
     public function show($id)
     {
-        $manga = Manga::find($id, Manga::$detailAttributes);
-        return response()->json($manga);
+        $manga = Manga::find($id, Manga::$detailAttrToSelect);
+        return response()->json($manga->toArray(Manga::$detailAttrToOutput));
     }
 
     /**
