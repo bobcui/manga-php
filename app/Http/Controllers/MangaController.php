@@ -11,8 +11,6 @@ use App\Manga;
 
 class MangaController extends Controller
 {
-    const MAX_COUNT_PER_REQUEST = 30;
-
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +19,9 @@ class MangaController extends Controller
     public function index(Request $request)
     {
         $offset = $request->query('offset', 0);
-        $limit = min($request->query('limit', static::MAX_COUNT_PER_REQUEST), static::MAX_COUNT_PER_REQUEST);
+
+        $maxCount = Config::get('manga.max_manga_count_per_request')
+        $limit = min($request->query('limit', $maxCount), $maxCount);
 
         $mangas = Manga::select(Manga::$briefAttrToSelect)
             ->skip($offset)
@@ -30,7 +30,7 @@ class MangaController extends Controller
 
         return response()->json($mangas->map(function($manga){
             return $manga->toArray(Manga::$briefAttrToOutput);
-        }));
+        }))->header('X-Total-Count', Manga::count());
     }
 
     /**
