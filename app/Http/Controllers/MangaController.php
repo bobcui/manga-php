@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -20,7 +21,7 @@ class MangaController extends Controller
     {
         $offset = $request->query('offset', 0);
 
-        $maxCount = Config::get('manga.max_manga_count_per_request')
+        $maxCount = Config::get('manga.max_manga_count_per_request');
         $limit = min($request->query('limit', $maxCount), $maxCount);
 
         $mangas = Manga::select(Manga::$briefAttrToSelect)

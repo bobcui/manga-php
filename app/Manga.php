@@ -21,18 +21,17 @@ class Manga extends Model
     public static $briefAttrToOutput = [
         'id',
         'nme',
-        'tbn'
     ];
 
     public static $detailAttrToSelect = [
         'id',
         'nme',
-        'slg',
         'cat',
         'dsc',
         'rnk',
         'mng_chp_cnt',
         'dte_upd',
+        'sts',
     ];
 
     public static $detailAttrToOutput = [
@@ -41,6 +40,7 @@ class Manga extends Model
         'rnk',
         'chps',
         'updts',
+        'sts'
     ];
 
     protected $hidden = [
@@ -50,7 +50,6 @@ class Manga extends Model
     ];
 
     protected $appends = [
-        'tbn',
         'chps',
         'updts'
     ];
@@ -63,17 +62,6 @@ class Manga extends Model
     public function getCatAttribute($value)
     {
         return explode(",", trim($value, ","));
-    }
-
-    public function getTbnAttribute()
-    {
-        $urlPartials = [
-            Config::get('manga.thumbnail_url'),
-            $this->slg,
-            '_144x0.jpg'
-        ];
-
-        return implode('', $urlPartials);
     }
 
     public function getChpsAttribute()
