@@ -1,6 +1,5 @@
 <?php
 
 return [
-    'thumbnail_url'  => 'http://www.mangabull.com/wp-content/manga/cover/tbn/',
-
+    'thumbnail_url'  => env('MANGA_THUMBNAIL_URL', ''),
 ];
