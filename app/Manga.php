@@ -8,8 +8,6 @@ class Manga extends Model
 {
     protected $table = 'wp_wpm_mng';
     
-    protected $primaryKey = 'id';
-    
     public $timestamps = false;
 
     public static $briefAttrToSelect = [
@@ -40,7 +38,8 @@ class Manga extends Model
         'rnk',
         'chps',
         'updts',
-        'sts'
+        'sts',
+        'chapters'
     ];
 
     protected $hidden = [
@@ -73,4 +72,9 @@ class Manga extends Model
     {
         return strtotime($this->dte_upd);
     }
+
+    public function chapters()
+    {
+        return $this->hasMany('App\Chapter', 'mng_id');//->select(Chapter::$attrToSelect);
+    }    
 }

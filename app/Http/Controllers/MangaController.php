@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Manga;
+use App\Chapter;
 
 class MangaController extends Controller
 {
@@ -42,7 +43,10 @@ class MangaController extends Controller
      */
     public function show($id)
     {
-        $manga = Manga::find($id, Manga::$detailAttrToSelect);
+        $manga = Manga::with(['chapters' => function($query){
+            $query->select(Chapter::$attrToSelect);
+        }])->find($id, Manga::$detailAttrToSelect);
+
         return response()->json($manga->toArray(Manga::$detailAttrToOutput));
     }
 
