@@ -8,13 +8,23 @@ class Chapter extends Model
 
     public static $attrToSelect = [
         'mng_id',
-        'slg',
+        'dir_pth',
         'ttl',
     ];
 
     protected $hidden = [
-        'mng_id'
+        'mng_id',
+        'dir_pth'
     ];
+
+    protected $appends = [
+        'idx',
+    ];
+
+    public function getIdxAttribute()
+    {
+        return $this->dir_pth;
+    }
 
     public function manga()
     {

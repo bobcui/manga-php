@@ -13,9 +13,11 @@
 
 use Illuminate\Support\Facades\Config;
 
-Route::get('/configs', function(){
-    return response()->json(Config::get('manga'));
-});
+Route::group(array('prefix' => 'v1'), function() {
+    Route::get('/configs', function(){
+        return response()->json(Config::get('manga'));
+    });
 
-Route::resource('mangas', 'MangaController', ['only' => ['index', 'show']]);
-Route::resource('categories', 'CategoryController', ['only' => ['index']]);
+    Route::resource('mangas', 'MangaController', ['only' => ['index', 'show']]);
+    Route::resource('categories', 'CategoryController', ['only' => ['index']]);
+});
