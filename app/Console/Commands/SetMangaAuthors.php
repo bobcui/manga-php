@@ -14,7 +14,7 @@ class SetMangaAuthors extends Command
      *
      * @var string
      */
-    protected $signature = 'manga:setAuthors';
+    protected $signature = 'manga:set-authors';
 
     /**
      * The console command description.

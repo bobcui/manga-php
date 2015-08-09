@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         \App\Console\Commands\Inspire::class,
         \App\Console\Commands\SetMangaAuthors::class,
+        \App\Console\Commands\SetChapterPageCount::class,
     ];
 
     /**
@@ -25,6 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('manga:setAuthors')->hourly();
+        //$schedule->command('manga:set-authors')->everyFiveMinutes();
+        //$schedule->command('manga:set-chapter-page-count')->everyFiveMinutes(); 
     }
 }

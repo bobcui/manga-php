@@ -6,6 +6,8 @@ class Chapter extends Model
 {
     protected $table = 'wp_wpm_mng_chp';
 
+    public $timestamps = false;
+
     public static $attrToSelect = [
         'mng_id',
         'dir_pth',
