@@ -53,6 +53,11 @@ class Manga extends Model
         'updts'
     ];
 
+    protected $casts = [
+        'authors' => 'array'
+    ];
+
+
     public function getDscAttribute($value)
     {
         return trim(str_replace("<br/>", "\n", $value));
@@ -75,6 +80,6 @@ class Manga extends Model
 
     public function chapters()
     {
-        return $this->hasMany('App\Chapter', 'mng_id');//->select(Chapter::$attrToSelect);
+        return $this->hasMany('App\Chapter', 'mng_id');
     }    
 }
