@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\Inspire::class,
         \App\Console\Commands\SetMangaAuthors::class,
         \App\Console\Commands\SetChapterPageCount::class,
+        \App\Console\Commands\GenerateMangaCategory::class,
     ];
 
     /**
@@ -28,5 +29,6 @@ class Kernel extends ConsoleKernel
     {
         //$schedule->command('manga:set-authors')->everyFiveMinutes();
         //$schedule->command('manga:set-chapter-page-count')->everyFiveMinutes(); 
+        //$schedule->command('manga:generate-manga-category')->daily(); 
     }
 }
