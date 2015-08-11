@@ -14,11 +14,13 @@ class Manga extends Model
         'id',
         'nme',
         'slg',
+        'rnk'
     ];
 
     public static $briefAttrToOutput = [
         'id',
         'nme',
+        'rnk'
     ];
 
     public static $detailAttrToSelect = [

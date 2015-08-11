@@ -10,9 +10,13 @@ use App\Http\Controllers\Controller;
 
 use App\Manga;
 use App\Chapter;
+use App\MangaCategory;
+
 
 class MangaController extends Controller
 {
+    const MAX_COUNT_PER_REQUEST = 30;
+
     /**
      * Display a listing of the resource.
      *
@@ -20,20 +24,69 @@ class MangaController extends Controller
      */
     public function index(Request $request)
     {
-        $offset = $request->query('offset', 0);
+        $search = $request->input('search');
+        $categories = $request->input('categories');
+        $status = $request->input('status');
+        
+        $sort = $request->input('sort');
+        if (!in_array($sort, ['nme', 'rnk', 'rnk_wek', 'dte_upd'])) {
+            $sort = 'rnk';
+        }
 
-        $maxCount = Config::get('manga.max_manga_count_per_request');
-        $limit = min($request->query('limit', $maxCount), $maxCount);
+        $order = $request->input('order');
+        if (!in_array($order, ['asc', 'desc'])) {
+            $order = 'asc';
+        }
 
-        $mangas = Manga::select(Manga::$briefAttrToSelect)
+        $offset = $request->input('offset', 0);
+        $limit = min($request->input('limit', static::MAX_COUNT_PER_REQUEST), static::MAX_COUNT_PER_REQUEST);
+
+        $mangaIds = [];
+        if (!is_null($categories)) {
+            if (!is_array($categories)) {
+                $categories = [$categories];
+            }
+
+            $results = MangaCategory::select('mng_id')
+                ->whereIn('cat_id', $categories)
+                ->distinct()
+                ->get();
+
+            foreach ($results as $result) {
+                $mangaIds[] = $result->mng_id;
+            }
+        }
+
+        $query = $this->makeMangaIndexQuery($mangaIds, $status, $search);
+        $mangaTotalCount = $query->count();
+
+        $mangas = $this->makeMangaIndexQuery($mangaIds, $status, $search)
+            ->select(Manga::$briefAttrToSelect)
+            ->orderBy($sort, $order)
             ->skip($offset)
             ->take($limit)
             ->get();
 
         return response()->json($mangas->map(function($manga){
             return $manga->toArray(Manga::$briefAttrToOutput);
-        }))->header('X-Total-Count', Manga::count());
+        }))->header('X-Total-Count', $mangaTotalCount);
     }
+
+    private function makeMangaIndexQuery($mangaIds, $status, $search)
+    {
+        $query = Manga::query();
+        if (!empty($mangaIds)) {
+            $query = $query->whereIn('id', $mangaIds);
+        }
+        if (!is_null($status)) {
+            $query = $query->where('sts', '=', $status);
+        }
+        if (!is_null($search)) {
+            $query = $query->where('nme', 'like', "%${search}%");
+        }
+        return $query;
+    }
+
 
     /**
      * Display the specified resource.
