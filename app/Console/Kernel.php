@@ -27,8 +27,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('manga:set-authors')->everyMinutes();
-        $schedule->command('manga:set-chapter-page-count')->everyMinutes(); 
+        $schedule->command('manga:set-authors')->everyMinute();
+        $schedule->command('manga:set-chapter-page-count')->everyMinute(); 
         $schedule->command('manga:generate-manga-category')->dailyAt('5:00');
     }
 }

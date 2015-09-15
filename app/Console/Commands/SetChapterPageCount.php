@@ -45,6 +45,7 @@ class SetChapterPageCount extends Command
 
         $nonPageCountChapterCount = Chapter::select(['mng_id', 'dir_pth'])
             ->where('dte_upd', '<=', $endDateTime)
+            ->where('sts', '=', 1)
             ->whereNull('pageCount')
             ->count();
 
@@ -56,6 +57,7 @@ class SetChapterPageCount extends Command
         while ($offset < $nonPageCountChapterCount) {
             $nonPageCountChapters = Chapter::select(['id', 'mng_id', 'dir_pth'])
                 ->where('dte_upd', '<=', $endDateTime)
+                ->where('sts', '=', 1)
                 ->whereNull('pageCount')
                 ->orderBy('id', 'asc')
                 ->skip($offset)
@@ -67,6 +69,7 @@ class SetChapterPageCount extends Command
                     '{manga-id}' => $chapter->mng_id,
                     '{chapter-idx}' => $chapter->dir_pth
                 ));
+                echo $chapter,"\n";
 
                 if ($chapter->dir_pth !== '' && file_exists($pagePath)) {
                     $chapter->pageCount = count(glob("${pagePath}/p_*.jpg"));       
