@@ -14,7 +14,7 @@
 use Illuminate\Support\Facades\Config;
 
 Route::group(array('prefix' => 'v1'), function() {
-    Route::get('/configs', function(){
+    Route::get('/config', function(){
         return response()->json(Config::get('manga'));
     });
 

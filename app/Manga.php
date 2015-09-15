@@ -20,32 +20,30 @@ class Manga extends Model
     public static $briefAttrToOutput = [
         'id',
         'nme',
+        'slg',
         'rnk'
     ];
 
     public static $detailAttrToSelect = [
         'id',
-        'nme',
         'cat',
         'dsc',
-        'rnk',
-        'mng_chp_cnt',
+        //'mng_chp_cnt',
         'dte_upd',
-        'sts',
+        'sts'
     ];
 
     public static $detailAttrToOutput = [
+        'id',
         'cat',
         'dsc',
-        'rnk',
-        'chps',
+        //'chps',
         'updts',
         'sts',
         'chapters'
     ];
 
     protected $hidden = [
-        'slg',
         'mng_chp_cnt',
         'dte_upd',
     ];
