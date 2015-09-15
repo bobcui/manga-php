@@ -15,7 +15,7 @@ use App\MangaCategory;
 
 class MangaController extends Controller
 {
-    const MAX_COUNT_PER_REQUEST = 500;
+    const MAX_COUNT_PER_REQUEST = 50;
 
     /**
      * Display a listing of the resource.

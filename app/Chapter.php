@@ -12,20 +12,28 @@ class Chapter extends Model
         'mng_id',
         'dir_pth',
         'ttl',
+        'pageCount',
     ];
 
     protected $hidden = [
         'mng_id',
-        'dir_pth'
+        'dir_pth',
+        'pageCount', 
     ];
 
     protected $appends = [
         'idx',
+        'cnt'
     ];
 
     public function getIdxAttribute()
     {
         return $this->dir_pth;
+    }
+
+    public function getCntAttribute()
+    {
+        return $this->pageCount;
     }
 
     public function manga()
