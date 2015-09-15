@@ -14,7 +14,6 @@ class AddAuthorsToWpWpmMngTable extends Migration
     {
         Schema::table('wp_wpm_mng', function (Blueprint $table) {
             $table->json('authors')->nullable()->default(null);
-            $table->index('authors');
         });
     }
 
